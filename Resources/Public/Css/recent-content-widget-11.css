@@ -1,0 +1,12 @@
+.o-recentcontentwidget .o-recentcontentwidget__element {
+    margin-top: 1.25rem;
+}
+
+.o-recentcontentwidget .c-title {
+    margin-right: 0.25rem;
+}
+
+.o-recentcontentwidget .c-badge {
+    padding: 0.125rem 0.375rem;
+    line-height: 1em;
+}
