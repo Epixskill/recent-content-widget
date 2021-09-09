@@ -17,6 +17,7 @@ All Changes
 
 This is a list of all changes in this release::
 
+   2021-09-09 [TASK] Add first documentation draft (a680f3b Niklas Grieger)
    2021-09-08 [TASK] Add .gitattributes (93d274b Niklas Grieger)
    2021-09-08 [TASK] Add support for TYPO3 v11.4 (5b1c72a Niklas Grieger)
    2021-09-08 [TASK] Add first README.md draft (6c9f466 Niklas Grieger)
