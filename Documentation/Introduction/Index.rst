@@ -10,6 +10,7 @@ This TYPO3 extension provides a dashboard widget that displays a list of last mo
       :class: with-shadow
       :alt: Add widget modal that shows the recent content widget
 
+
 .. figure:: ../Images/widget-on-dashboard.png
       :class: with-shadow
       :alt: The recent content widget on the dashboard
