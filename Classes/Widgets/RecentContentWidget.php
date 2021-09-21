@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace Epixskill\RecentContentWidget\Widgets;
 
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\EndTimeRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
@@ -132,7 +133,10 @@ class RecentContentWidget implements WidgetInterface, AdditionalCssInterface
                     if (time() > $results[$i]['endtime'] && $results[$i]['endtime'] > 0 && $results[$i]['hidden'] === 0) {
                         $results[$i]['badges']['visibleInPast'] = 1;
                     }
-                    $results[$i]['CTypeTranslationKey'] = $this->getCTypeTranslationKey($results[$i]['CType']);
+                    $results[$i]['CTypeTranslationString'] = $this->getCTypeTranslationString($results[$i]['CType'], $results[$i]['pid']);
+                    if (substr($results[$i]['CTypeTranslationString'], 0, 4) === 'LLL:') {
+                        $results[$i]['CTypeTranslationKey'] = true;
+                    }
                     if (count($elements) < $limit) {
                         $elements[] = $results[$i];
                     }
@@ -143,13 +147,18 @@ class RecentContentWidget implements WidgetInterface, AdditionalCssInterface
         return $elements;
     }
 
-    protected function getCTypeTranslationKey(string $key): string
+    protected function getCTypeTranslationString(string $key, int $pid): string
     {
         $label = '';
-        foreach ($GLOBALS['TCA']['tt_content']['columns']['CType']['config']['items'] as $type) {
-            if ($type[1] === $key) {
-                $label = $type[0];
+        $CTypeLabels = [];
+        $contentGroups = BackendUtility::getPagesTSconfig($pid)['mod.']['wizards.']['newContentElement.']['wizardItems.'] ?? [];
+        foreach ($contentGroups as $group) {
+            foreach ($group['elements.'] as $element) {
+                $CTypeLabels[$element['tt_content_defValues.']['CType']] = $element['title'];
             }
+        }
+        if ($CTypeLabels[$key]) {
+            $label = $CTypeLabels[$key];
         }
         return $label;
     }

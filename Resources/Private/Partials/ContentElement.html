@@ -33,7 +33,7 @@
             </f:if>
         </div>
         <div>
-            <span><f:translate key="LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.type" />:&nbsp;<f:translate key="{element.CTypeTranslationKey}" /></span>
+            <span><f:translate key="LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.type" />:&nbsp;<f:if condition="{element.CTypeTranslationKey}"><f:then><f:translate key="{element.CTypeTranslationString}" /></f:then><f:else>{element.CTypeTranslationString}</f:else></f:if></span>
             <span> | </span>
             <span><f:translate key="widgets.recentContent.contentId" extensionName="recentContentWidget" />&nbsp;{element.uid}</span>
             <span> | </span>
