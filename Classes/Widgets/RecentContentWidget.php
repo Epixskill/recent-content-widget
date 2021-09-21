@@ -42,25 +42,25 @@ class RecentContentWidget implements WidgetInterface, AdditionalCssInterface
     private $view;
 
     /**
-     * @var array
-     */
-    private $options;
-
-    /**
      * @var PageRepository
      */
     private $pageRepository;
 
+    /**
+     * @var array
+     */
+    private $options;
+
     public function __construct(
         WidgetConfigurationInterface $configuration,
         StandaloneView $view,
-        array $options = [],
-        PageRepository $pageRepository
+        PageRepository $pageRepository,
+        array $options = []
     ) {
         $this->configuration = $configuration;
         $this->view = $view;
-        $this->options = $options;
         $this->pageRepository = $pageRepository;
+        $this->options = $options;
     }
 
     public function renderWidgetContent(): string
