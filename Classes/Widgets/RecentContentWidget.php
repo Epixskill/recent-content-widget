@@ -120,7 +120,7 @@ class RecentContentWidget implements WidgetInterface, AdditionalCssInterface
         do {
             $results = $this->getRecentElementsBatch($batchLimit, $offset);
             for ($i = 0; $i < count($results); $i++) {
-                if ($GLOBALS['BE_USER']->doesUserHaveAccess($this->pageRepository->getPage($results[$i]['pid']), 16)) {
+                if (isset($results[$i]['pid']) && $results[$i]['pid'] > 0 && $GLOBALS['BE_USER']->doesUserHaveAccess($this->pageRepository->getPage($results[$i]['pid']), 16)) {
                     if ($GLOBALS['BE_USER']->recordEditAccessInternals('tt_content', $results[$i]['uid'])) {
                         $results[$i]['isEditable'] = 1;
                     }
