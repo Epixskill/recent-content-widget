@@ -133,7 +133,7 @@ class RecentContentWidget implements WidgetInterface, AdditionalCssInterface
                     if (time() > $results[$i]['endtime'] && $results[$i]['endtime'] > 0 && $results[$i]['hidden'] === 0) {
                         $results[$i]['badges']['visibleInPast'] = 1;
                     }
-                    $results[$i]['CTypeTranslationString'] = $this->getCTypeTranslationString($results[$i]['CType'], $results[$i]['pid']);
+                    $results[$i]['CTypeTranslationString'] = $this->getCTypeTranslationString($results[$i]['CType'], $results[$i]['list_type'], $results[$i]['pid']);
                     if (substr($results[$i]['CTypeTranslationString'], 0, 4) === 'LLL:') {
                         $results[$i]['CTypeTranslationKey'] = true;
                     }
@@ -147,18 +147,26 @@ class RecentContentWidget implements WidgetInterface, AdditionalCssInterface
         return $elements;
     }
 
-    protected function getCTypeTranslationString(string $key, int $pid): string
+    protected function getCTypeTranslationString(string $cType, string $listType, int $pid): string
     {
         $label = '';
         $CTypeLabels = [];
         $contentGroups = BackendUtility::getPagesTSconfig($pid)['mod.']['wizards.']['newContentElement.']['wizardItems.'] ?? [];
         foreach ($contentGroups as $group) {
             foreach ($group['elements.'] as $element) {
-                $CTypeLabels[$element['tt_content_defValues.']['CType']] = $element['title'];
+                if ($element['tt_content_defValues.']['CType'] !== 'list') {
+                    $CTypeLabels[$element['tt_content_defValues.']['CType']] = $element['title'];
+                }
+                if ($element['tt_content_defValues.']['CType'] === 'list' && $element['tt_content_defValues.']['list_type'] !== '') {
+                    $CTypeLabels[$element['tt_content_defValues.']['CType']][$element['tt_content_defValues.']['list_type']] = $element['title'];
+                }
             }
         }
-        if (isset($CTypeLabels[$key])) {
-            $label = $CTypeLabels[$key];
+        if (isset($CTypeLabels[$cType]) && $cType !== 'list') {
+            $label = $CTypeLabels[$cType];
+        }
+        if (isset($CTypeLabels[$cType][$listType]) && $cType === 'list) {
+            $label = $CTypeLabels[$cType][$listType];
         }
         return $label;
     }
