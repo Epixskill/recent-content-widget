@@ -162,8 +162,12 @@ class RecentContentWidget implements WidgetInterface, AdditionalCssInterface
                 }
             }
         }
-        if (isset($CTypeLabels[$cType]) && $cType !== 'list') {
-            $label = $CTypeLabels[$cType];
+        if (isset($CTypeLabels[$cType])) {
+            if ($cType !== 'list') {
+                $label = $CTypeLabels[$cType];
+            } else {
+                $label = 'LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:plugins_general_title';
+            }
         }
         if (isset($CTypeLabels[$cType][$listType]) && $cType === 'list') {
             $label = $CTypeLabels[$cType][$listType];
