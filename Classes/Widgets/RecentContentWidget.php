@@ -25,7 +25,6 @@ use TYPO3\CMS\Core\Database\Query\Restriction\StartTimeRestriction;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Dashboard\Widgets\AdditionalCssInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
@@ -166,7 +165,7 @@ class RecentContentWidget implements WidgetInterface, AdditionalCssInterface
         if (isset($CTypeLabels[$cType]) && $cType !== 'list') {
             $label = $CTypeLabels[$cType];
         }
-        if (isset($CTypeLabels[$cType][$listType]) && $cType === 'list) {
+        if (isset($CTypeLabels[$cType][$listType]) && $cType === 'list') {
             $label = $CTypeLabels[$cType][$listType];
         }
         return $label;
