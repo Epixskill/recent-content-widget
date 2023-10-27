@@ -23,6 +23,7 @@ use TYPO3\CMS\Core\Database\Query\Restriction\EndTimeRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\StartTimeRestriction;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Dashboard\Widgets\AdditionalCssInterface;
@@ -82,7 +83,7 @@ class RecentContentWidget implements WidgetInterface, AdditionalCssInterface
 
     public function getCssFiles(): array
     {
-        if ($this->getTypo3MainVersion() === 11) {
+        if (GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() === 11) {
             return [
                 'EXT:recent_content_widget/Resources/Public/Css/recent-content-widget.css',
                 'EXT:recent_content_widget/Resources/Public/Css/recent-content-widget-11.css',
@@ -169,12 +170,5 @@ class RecentContentWidget implements WidgetInterface, AdditionalCssInterface
             $label = $CTypeLabels[$cType][$listType];
         }
         return $label;
-    }
-
-    protected function getTypo3MainVersion(): int
-    {
-        $versionNumberUtility = GeneralUtility::makeInstance(VersionNumberUtility::class);
-        $versionArray = $versionNumberUtility->convertVersionStringToArray($versionNumberUtility->getCurrentTypo3Version());
-        return $versionArray['version_main'];
     }
 }
