@@ -157,7 +157,7 @@ class RecentContentWidget implements WidgetInterface, AdditionalCssInterface
                 if ($element['tt_content_defValues.']['CType'] !== 'list') {
                     $CTypeLabels[$element['tt_content_defValues.']['CType']] = $element['title'];
                 }
-                if ($element['tt_content_defValues.']['CType'] === 'list' && $element['tt_content_defValues.']['list_type'] !== '') {
+                if ($element['tt_content_defValues.']['CType'] === 'list' && isset($element['tt_content_defValues.']['list_type'])) {
                     $CTypeLabels[$element['tt_content_defValues.']['CType']][$element['tt_content_defValues.']['list_type']] = $element['title'];
                 }
             }
