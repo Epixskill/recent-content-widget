@@ -4,10 +4,10 @@
   "description": "A widget for the dashboard to display new and recently updated content elements.",
   "license": "GPL-2.0-or-later",
   "require": {
-    "typo3/cms-backend": "^10.4.19 || ^11.5.0",
-    "typo3/cms-core": "^10.4.19 || ^11.5.0",
-    "typo3/cms-dashboard": "^10.4.19 || ^11.5.0",
-    "typo3/cms-fluid": "^10.4.19 || ^11.5.0"
+    "typo3/cms-backend": "^10.4.19 || ^11.5.0 || ^12.4.0",
+    "typo3/cms-core": "^10.4.19 || ^11.5.0 || ^12.4.0",
+    "typo3/cms-dashboard": "^10.4.19 || ^11.5.0 || ^12.4.0",
+    "typo3/cms-fluid": "^10.4.19 || ^11.5.0 || ^12.4.0"
   },
   "authors": [
     {
