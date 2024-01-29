@@ -115,12 +115,17 @@ class RecentContentWidget implements WidgetInterface, AdditionalCssInterface
     protected function getRecentContent(int $limit): array
     {
         $elements = [];
-        $batchLimit = 1000;
+        $batchLimit = min($limit, 1000);
         $offset = 0;
         do {
             $results = $this->getRecentElementsBatch($batchLimit, $offset);
             for ($i = 0; $i < count($results); $i++) {
-                if (isset($results[$i]['pid']) && $results[$i]['pid'] > 0 && $GLOBALS['BE_USER']->doesUserHaveAccess($this->pageRepository->getPage($results[$i]['pid']), 16)) {
+                if (!isset($results[$i]['pid']) || $results[$i]['pid'] <= 0) {
+                    continue;
+                }
+                // disable group check in getPage as it checks for frontend user
+                $page = $this->pageRepository->getPage($results[$i]['pid'], true);
+                if ($GLOBALS['BE_USER']->doesUserHaveAccess($page, 16)) {
                     if ($GLOBALS['BE_USER']->recordEditAccessInternals('tt_content', $results[$i]['uid'])) {
                         $results[$i]['isEditable'] = 1;
                     }
@@ -133,7 +138,11 @@ class RecentContentWidget implements WidgetInterface, AdditionalCssInterface
                     if (time() > $results[$i]['endtime'] && $results[$i]['endtime'] > 0 && $results[$i]['hidden'] === 0) {
                         $results[$i]['badges']['visibleInPast'] = 1;
                     }
-                    $results[$i]['CTypeTranslationString'] = $this->getCTypeTranslationString($results[$i]['CType'], $results[$i]['list_type'], $results[$i]['pid']);
+                    $results[$i]['CTypeTranslationString'] = $this->getCTypeTranslationString(
+                      $results[$i]['CType'],
+                      $results[$i]['list_type'],
+                      $results[$i]['pid']
+                    );
                     if (substr($results[$i]['CTypeTranslationString'], 0, 4) === 'LLL:') {
                         $results[$i]['CTypeTranslationKey'] = true;
                     }
