@@ -115,7 +115,7 @@ class RecentContentWidget implements WidgetInterface, AdditionalCssInterface
     protected function getRecentContent(int $limit): array
     {
         $elements = [];
-        $batchLimit = 1000;
+        $batchLimit = min($limit, 1000);
         $offset = 0;
         do {
             $results = $this->getRecentElementsBatch($batchLimit, $offset);
